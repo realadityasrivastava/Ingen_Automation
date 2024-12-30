@@ -84,26 +84,26 @@ public class methods {
         }
     
 }
-	public void companywithpass() {
+	public void companywithpass(String comapnay_name, String email,String trade_name, String business_address, String contact) {
 		WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(10));
 		WebElement cmp=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Companies']")));
 		cmp.click();
 		WebElement plus=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@title='']")));
 		plus.click();
 		WebElement cname=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter Company Name']")));
-		cname.sendKeys("Aditya Private Limited");
-		WebElement email=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter Company Email']")));
-		email.sendKeys("aditya29@yopmail.com");
+		cname.sendKeys(comapnay_name);
+		WebElement em=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter Company Email']")));
+		em.sendKeys(email);
 		WebElement trade=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter Trade Name']")));
-		trade.sendKeys("");
+		trade.sendKeys(trade_name);
 		WebElement vat=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Vat Registration Number']")));
 		vat.sendKeys("28229713");
 		WebElement brn=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='business_registration_number']")));
 		brn.sendKeys("24205252");
 		WebElement address=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='business_address']")));
-		address.sendKeys("Noida");
+		address.sendKeys(business_address);
 		WebElement num=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='contact_number']")));
-		num.sendKeys("5465446546");
+		num.sendKeys(contact);
 		WebElement loginsw=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='password_switch']")));
 		loginsw.click();
 		WebElement pass=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='password']")));
@@ -111,15 +111,15 @@ public class methods {
 		WebElement create=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@value='Create']")));
 		create.click();
 	}
-	public void loginviacompany() {
+	public void loginviacompany(String email, String pass) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Use shared driver
 		WebElement button=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/header/div[2]/nav/div[3]/a[1]")));
 		button.click();
 		WebElement user = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter Your Email']"))); // Identifying
-		user.sendKeys("aditya29@yopmail.com"); // Action
+		user.sendKeys(email); // Action
 		
 		WebElement password = driver.findElement(By.xpath("//input[@placeholder='Enter Your Password']")); // Identifying
-		password.sendKeys("Ingen@123456789"); // Action
+		password.sendKeys(pass); // Action
 		
 		WebElement lg = driver.findElement(By.xpath("//input[@id='saveBtn']")); // Identifying
 		lg.click(); // Action
@@ -130,7 +130,7 @@ public class methods {
 		System.out.println("LOGIN SUCCESSFULLY VIA COMPANY");
 		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 	}
-	public void customer() {
+	public void customer(String name, String contact, String email) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Use shared driver
 		WebElement as=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/nav/div[1]/div[2]/ul/li[3]/a/span[2]")));
 		as.click();
@@ -141,11 +141,11 @@ public class methods {
 		WebElement plus=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div/div[1]/div/div/div[2]/div/a[3]")));
 		plus.click();
 		WebElement cname=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter Name']")));
-		cname.sendKeys("Customer1");
+		cname.sendKeys(name);
 		WebElement cnum=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter Contact']")));
-		cnum.sendKeys("+917546892130");
-		WebElement email=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter email']")));
-		email.sendKeys("customer1@yopmail.com");
+		cnum.sendKeys(contact);
+		WebElement em=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter email']")));
+		em.sendKeys(email);
 		WebElement tax=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='tax_number']")));
 		tax.sendKeys("7");
 		WebElement brn=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[3]/div/div/div[2]/form/div[1]/div[1]/div[5]/div/input")));
@@ -204,7 +204,7 @@ public class methods {
 		System.out.println("Unit Name = KG");
 		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 		}
-	public void product() {
+	public void product(String product_name, String sku, String sale_price, String cost_price, String quantity) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Use shared driver
 		WebElement dashboard=wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Dashboard")));
 		dashboard.click();
@@ -215,13 +215,13 @@ public class methods {
 		WebElement plus=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@data-title='Create New Product & Service']")));
 		plus.click();
 		WebElement name=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='name']")));
-		name.sendKeys("Apple");
-		WebElement sku=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='sku']")));
-		sku.sendKeys("001");
+		name.sendKeys(product_name);
+		WebElement sk=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='sku']")));
+		sk.sendKeys(sku);
 		WebElement saleprice=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='sale_price']")));
-		saleprice.sendKeys("100");
+		saleprice.sendKeys(sale_price);
 		WebElement costprice=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='purchase_price']")));
-		costprice.sendKeys("70");
+		costprice.sendKeys(cost_price);
 		WebElement income=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@name='sale_chartaccount_id']")));
 		Select s=new Select(income);
 		s.selectByVisibleText("4010 - Sales Income");
@@ -235,8 +235,8 @@ public class methods {
 		Select s2=new Select(category);
 		s2.selectByVisibleText("Category1");
 		this.scroll();
-		WebElement quantity=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='quantity']")));
-		quantity.sendKeys("100");
+		WebElement quan1=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='quantity']")));
+		quan1.sendKeys(quantity);
 		WebElement desp=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//textarea[@id='description']")));
 		desp.sendKeys("test");
 		WebElement create=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@value='Create']")));
