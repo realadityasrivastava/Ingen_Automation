@@ -303,7 +303,7 @@ public class methods {
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Qty']"))).sendKeys("5");
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@value='Create']"))).click();
 		this.scroll();
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[3]/div/div[3]/div/div/div/div/div/div[2]/table/tbody/tr[4]/td[6]/span/div[3]/a"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[3]/div/div[3]/div/div/div/div/div/div[2]/table/tbody/tr[1]/td[6]/span/div[3]/a"))).click();
 		this.scroll();
 		
 	}
