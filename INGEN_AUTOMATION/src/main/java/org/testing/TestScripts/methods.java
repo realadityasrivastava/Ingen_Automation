@@ -29,6 +29,9 @@ public class methods {
 		WebElement lg = driver.findElement(By.xpath("//input[@id='saveBtn']")); // Identifying
 		lg.click(); // Action
 		
+		WebElement reject=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"c-s-bn\"]")));
+		reject.click();
+		
 		System.out.println("LOGIN SUCCESSFULLY VIA SUPER ADMIN");
 		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 	}
@@ -44,62 +47,68 @@ public class methods {
 		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 		}	
 	public void img_verify() {
+	    try {
+	        // Get all <img> elements
+	        List<WebElement> images = driver.findElements(By.tagName("img"));
 
-        try {
-            // Get all <img> elements
-            List<WebElement> images = driver.findElements(By.tagName("img"));
+	        System.out.println("Total images found: " + images.size());
 
-            System.out.println("Total images found: " + images.size());
+	        // Loop through each image and validate
+	        for (WebElement img : images) {
+	            String src = img.getAttribute("src");
 
-            // Loop through each image and validate
-            for (WebElement img : images) {
-                String src = img.getAttribute("src");
+	            if (src == null || src.isEmpty()) {
+	                System.err.println("Image with missing 'src' attribute found.");
+	                continue;
+	            }
 
-                if (src == null || src.isEmpty()) {
-                    System.out.println("Image with missing 'src' attribute found.");
-                    continue;
-                }
+	            HttpURLConnection connection = null;
+	            int responseCode = -1; // Initialize with a default value
 
-                // Validate image using HTTP connection
-                try {
-                    HttpURLConnection connection = (HttpURLConnection) new URL(src).openConnection();
-                    connection.setRequestMethod("HEAD");
-                    connection.connect();
+	            try {
+	                // Validate image using HTTP connection
+	                connection = (HttpURLConnection) new URL(src).openConnection();
+	                connection.setRequestMethod("HEAD");
+	                connection.connect();
 
-                    int responseCode = connection.getResponseCode();
-                    if (responseCode >= 200 && responseCode < 400) {
-                        System.out.println("Image is valid: " + src);
-                    } else {
-                        System.out.println("Broken image detected: " + src);
-                    }
-
-                } catch (Exception e) {
-                    System.out.println("Error validating image: " + src);
-                    e.printStackTrace();
-                }
-            }
-        } finally {
-            // Close the browser
-//            driver.quit();
-        }
-    
-}
+	                responseCode = connection.getResponseCode();
+	                if (responseCode >= 200 && responseCode < 400) {
+	                    System.out.println("Response code = " + responseCode);
+	                    System.out.println("Image is valid: " + src);
+	                } else {
+	                    System.err.println("Broken image detected: " + src);
+	                }
+	            } catch (Exception e) {
+	            	System.err.println("Response code: " + responseCode);
+	                System.err.println("Error validating image: " + src);
+	                e.printStackTrace();
+	            } finally {
+	                if (connection != null) {
+	                    connection.disconnect();
+	                }
+	            }
+	        }
+	    } finally {
+	        // Close the browser
+	        // driver.quit();
+	    }
+	}
 	public void companywithpass(String comapnay_name, String email,String trade_name, String business_address, String contact) {
 		WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(10));
 		WebElement cmp=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Companies']")));
 		cmp.click();
 		WebElement plus=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@title='']")));
 		plus.click();
-		WebElement cname=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter Company Name']")));
+		WebElement cname=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Company Name']")));
 		cname.sendKeys(comapnay_name);
-		WebElement em=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter Company Email']")));
+		WebElement em=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Company Email']")));
 		em.sendKeys(email);
-		WebElement trade=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter Trade Name']")));
+		WebElement trade=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Trade Name']")));
 		trade.sendKeys(trade_name);
 		WebElement vat=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Vat Registration Number']")));
 		vat.sendKeys("28229713");
 		WebElement brn=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='business_registration_number']")));
-		brn.sendKeys("24205252");
+		brn.sendKeys("C24205252");
 		WebElement address=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='business_address']")));
 		address.sendKeys(business_address);
 		WebElement num=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='contact_number']")));
@@ -138,25 +147,25 @@ public class methods {
 		sales.click();
 		WebElement cus=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/nav/div[1]/div[2]/ul/li[3]/ul/li[2]/ul/li[1]/a")));
 		cus.click();
-		WebElement plus=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div/div[1]/div/div/div[2]/div/a[3]")));
+		WebElement plus=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[3]/div/div[1]/div/div/div[2]/div/a[3]")));
 		plus.click();
-		WebElement cname=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter Name']")));
+		WebElement cname=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Name']")));
 		cname.sendKeys(name);
-		WebElement cnum=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter Contact']")));
+		WebElement cnum=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Contact data']")));
 		cnum.sendKeys(contact);
-		WebElement em=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter email']")));
+		WebElement em=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='email']")));
 		em.sendKeys(email);
 		WebElement tax=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='tax_number']")));
-		tax.sendKeys("7");
-		WebElement brn=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[3]/div/div/div[2]/form/div[1]/div[1]/div[5]/div/input")));
-		brn.sendKeys("24205252");
-		WebElement nin=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[3]/div/div/div[2]/form/div[1]/div[1]/div[8]/div/input")));
-		nin.sendKeys("aditya123");
+		tax.sendKeys("28229713");
+		WebElement brn=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='business_registration_number']")));
+		brn.sendKeys("C24205252");
+		WebElement nin=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='nic_number']")));
+		nin.sendKeys("adityaaaaaa123");
 		this.scroll();
-		WebElement create=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@value='Create']")));
+		WebElement create=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='CreateSubmit']")));
 		create.click();
 	}
-	public void setup_for_product() {
+	public void setup_for_product() throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Use shared driver
 		WebElement as=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/nav/div[1]/div[2]/ul/li[3]/a/span[2]")));
 		as.click();
@@ -187,7 +196,18 @@ public class methods {
 		WebElement create2=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@value='Create']")));
 		create2.click();
 		System.out.println("Category Created Successfully");
-		System.out.println("Category Name = Ctaegory1, Category Type = Product & Service");
+		System.out.println("Category Name = Category1, Category Type = Product & Service");
+		WebElement plus2=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@data-title='Create New Category']")));
+		plus2.click();
+		WebElement catename2=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='name']")));
+		catename2.sendKeys("Category2");
+		WebElement drop2=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='type']")));
+		Select s2=new Select(drop2);
+		s2.selectByVisibleText("Income");
+		Thread.sleep(1000);
+		WebElement create3=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@value='Create']")));
+		create3.click();
+		System.out.println("Category Name = Category2, Category Type = Income");
 		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
 		
@@ -218,25 +238,33 @@ public class methods {
 		name.sendKeys(product_name);
 		WebElement sk=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='sku']")));
 		sk.sendKeys(sku);
+		WebElement tax=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='tax_category']")));
+		Select s=new Select(tax);
+		s.selectByVisibleText("TC01");
+		
 		WebElement saleprice=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='sale_price']")));
 		saleprice.sendKeys(sale_price);
 		WebElement costprice=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='purchase_price']")));
 		costprice.sendKeys(cost_price);
 		WebElement income=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@name='sale_chartaccount_id']")));
-		Select s=new Select(income);
-		s.selectByVisibleText("4010 - Sales Income");
+		Select s0=new Select(income);
+		s0.selectByVisibleText("4010 - Sales Income");
 		WebElement expense=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@name='expense_chartaccount_id']")));
 		Select s1=new Select(expense);
 		s1.selectByVisibleText("5010 - Cost of Sales - Purchases");
-		WebElement tax=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[3]/div/div/div[2]/form/div[1]/div[2]/div[8]/div/div[1]/input")));
-		tax.sendKeys("tax");
-		tax.sendKeys(Keys.ENTER);
+		WebElement tax2=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[4]/div/div/div[2]/form/div[1]/div[2]/div[8]/div/div[1]/input")));
+		tax2.sendKeys("tax");
+		tax2.sendKeys(Keys.ENTER);
 		WebElement category=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='category_id']")));
 		Select s2=new Select(category);
 		s2.selectByVisibleText("Category1");
 		this.scroll();
 		WebElement quan1=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='quantity']")));
 		quan1.sendKeys(quantity);
+		WebElement unit=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='unit_id']")));
+		Select s3 = new Select(unit);
+		s3.selectByVisibleText("KG");
+		
 		WebElement desp=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//textarea[@id='description']")));
 		desp.sendKeys("test");
 		WebElement create=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@value='Create']")));
@@ -245,7 +273,7 @@ public class methods {
 		System.out.println("Product Name = Apple, Sale Price = 100, Quantity = 100");
 		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 	}
-	public void invoice() {
+	public void invoice() throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Use shared driver
 		WebElement as=wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Accounting System")));
 		as.click();
@@ -257,12 +285,26 @@ public class methods {
 		plus.click();
 		WebElement cus=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='customer']")));
 		Select s=new Select(cus);
-		s.selectByVisibleText("Customer1");
+		s.selectByVisibleText("Customer2");
 		WebElement issue=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='issue_date']")));
 		issue.sendKeys("30122024");
 		WebElement due=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='due_date']")));
 		due.sendKeys("05012025");
+		WebElement cate=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='category_id']"))); 
+		Select s1=new Select(cate);
+		s1.selectByVisibleText("Category2");
+		WebElement ref=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='ref_number']")));
+		ref.sendKeys("001");
+		this.scroll();
+		WebElement selcat=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"sortable-table\"]/tbody/tr[1]/td[1]/select")));
+		Select s2=new Select(selcat);
+		s2.selectByVisibleText("Apple");
+		Thread.sleep(5000);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Qty']"))).sendKeys("5");
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@value='Create']"))).click();
+		this.scroll();
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[3]/div/div[3]/div/div/div/div/div/div[2]/table/tbody/tr[4]/td[6]/span/div[3]/a"))).click();
+		this.scroll();
 		
-
 	}
 }
