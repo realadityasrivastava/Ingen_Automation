@@ -1,10 +1,10 @@
 package org.testing.TestCases;
 
-import org.testing.TestScripts.Flow1;
+import org.testing.TestScripts.flow_methods;
 
-public class allflw {
+public class Flow1 {
 public static void main(String[] args) throws InterruptedException {
-	Flow1 f=new Flow1();
+	flow_methods f=new flow_methods();
 	f.browserlaunch();
 	f.loginviasuperadmin();
 	f.img_verify();
