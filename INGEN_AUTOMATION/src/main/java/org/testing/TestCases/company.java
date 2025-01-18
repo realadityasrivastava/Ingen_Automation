@@ -11,6 +11,6 @@ public static void main(String[] args) throws InterruptedException {
 	m.browserlaunch();
 	m.loginviasuperadmin();
 	m.img_verify();
-	m.companywithpass("Mohan Private Limited", "mohan06@yopmail.com", "mohan06", "Noida", "6523487925");
+	m.companywithpass("Govind Private Limited", "govind17@yopmail.com", "Govind17", "Noida", "523487925");
 }
 }

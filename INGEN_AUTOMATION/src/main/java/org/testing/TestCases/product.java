@@ -6,7 +6,7 @@ public class product {
 public static void main(String[] args) {
 	methods g=new methods();
 	g.browserlaunch();
-	g.loginviacompany("mohan06@yopmail.com", "Ingen@123456789");
+	g.loginviacompany("govind17@yopmail.com", "Ingen@123456789");
 	g.product("Apple", "001", "100", "70", "100");
 }
 }

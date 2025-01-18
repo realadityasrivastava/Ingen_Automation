@@ -14,7 +14,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class methods {
+public class Flow1 {
 	ChromeDriver driver;
 	public void loginviasuperadmin() throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Use shared driver
@@ -128,9 +128,6 @@ public class methods {
 		
 		WebElement lg = driver.findElement(By.xpath("//input[@id='saveBtn']")); // Identifying
 		lg.click(); // Action
-		
-		WebElement reject=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"c-s-bn\"]")));
-		reject.click();
 		
 		System.out.println("LOGIN SUCCESSFULLY VIA COMPANY");
 		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
@@ -304,5 +301,10 @@ public class methods {
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[3]/div/div[4]/div/div/div/div/div/div[2]/table/tbody/tr/td[6]/span/div[3]/a"))).click();
 		this.scroll();
 		
+	}
+	public void logout_superadmin() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Use shared driver
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Hi, Super Admin 1!']"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Logout"))).click();
 	}
 }
