@@ -385,6 +385,42 @@ public class methods {
 	        // driver.quit();
 	    }
 	}
+	public void capturePopupAndStopOnError2() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+
+        // Wait for the pop-up to be visible
+        WebElement popup = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"liveToast\"]/div/div")));
+
+        // Get the text of the pop-up
+        String message = popup.getText();
+        System.out.println("Captured Pop-up Message: " + message);
+
+        // Check for errors in the pop-up message
+        if (message == null || message.isEmpty()) {
+            System.out.println("No message found in the pop-up.");
+            throw new RuntimeException("No pop-up message detected. Stopping execution.");
+        }
+
+        // Check for error messages
+        if (checkForError2(message)) {
+            System.out.println("Error detected in pop-up. Terminating execution.");
+        }
+    }
+	 // Method to check for error messages in the pop-up
+    public boolean checkForError2(String message) {
+        String[] errorKeywords = { "error", "failed", "user not created", "invalid", "unsuccessful","Opps" };
+
+        // Check if the message contains any error keyword
+        for (String keyword : errorKeywords) {
+            if (message.contains(keyword)) {
+//              System.out.println("Error detected in pop-up: " + message);
+                return true;
+            }
+        }
+
+        return false; // No errors found
+    }
+
 
 
 }
