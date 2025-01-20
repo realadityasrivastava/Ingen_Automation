@@ -25,14 +25,14 @@ public class methods {
 		WebElement user = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter Your Email']"))); // Identifying
 		user.sendKeys("superadmin@example.com"); // Action
 		
+		WebElement reject=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"c-s-bn\"]")));
+		reject.click();
+		
 		WebElement password = driver.findElement(By.xpath("//input[@placeholder='Enter Your Password']")); // Identifying
 		password.sendKeys("1234"); // Action
 		
 		WebElement lg = driver.findElement(By.xpath("//input[@id='saveBtn']")); // Identifying
 		lg.click(); // Action
-		
-		WebElement reject=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"c-s-bn\"]")));
-		reject.click();
 		
 		System.out.println("LOGIN SUCCESSFULLY VIA SUPER ADMIN");
 		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
