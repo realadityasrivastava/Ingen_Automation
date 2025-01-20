@@ -445,4 +445,19 @@ public class methods {
 
 	    return false; // No success found
 	}
+	public void credit_note() throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Use shared driver
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/nav/div[1]/div[2]/ul/li[2]/a"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Credit Note"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@data-title='Create New Credit Note']"))).click();
+		WebElement invoice_name=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='invoice']")));
+		Select inv = new Select(invoice_name);
+		inv.selectByVisibleText("INV-2025-00014");
+//		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='amount']"))).sendKeys("500");
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='date']"))).sendKeys("20102025");
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//textarea[@id='description']"))).sendKeys("test");
+		Thread.sleep(1000);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='creditNoteCreateSubmit']"))).click();
+
+	}
 }

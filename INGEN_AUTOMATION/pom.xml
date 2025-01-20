@@ -15,21 +15,16 @@
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-    	<groupId>FirstPro</groupId>
-    	<artifactId>FirstPro</artifactId>
-    	<version>0.0.1-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-    	<groupId>ciis_automation</groupId>
-    	<artifactId>ciis_automation</artifactId>
-    	<version>0.0.1-SNAPSHOT</version>
-    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+      <dependency>
+          <groupId>org.seleniumhq.selenium</groupId>
+          <artifactId>selenium-java</artifactId>
+          <version>4.27.0</version>
+      </dependency>
+      <dependency>
+      	<groupId>ciis_automation</groupId>
+      	<artifactId>ciis_automation</artifactId>
+      	<version>0.0.1-SNAPSHOT</version>
+      </dependency>
   </dependencies>
 </project>
