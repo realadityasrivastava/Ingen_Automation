@@ -9,6 +9,7 @@ public static void main(String[] args) throws InterruptedException {
 	m.invoice();
 	m.capturePopupAndStopOnError2();
 	Thread.sleep(3000);
-	m.img_verify2();
+	m.qrverify_latestinvoice();
+	m.img_verify2_httpwithbase64();
 }
 }

@@ -48,7 +48,7 @@ public class methods {
 		System.out.println("WEBSITE LOADED SUCCESSFULLY");
 		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 		}	
-	public void img_verify() {
+	public void img_verify_httponly() {
 	    try {
 	        // Get all <img> elements
 	        List<WebElement> images = driver.findElements(By.tagName("img"));
@@ -94,6 +94,7 @@ public class methods {
 	        // Close the browser
 	        // driver.quit();
 	    }
+		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 	}
 	public void companywithpass(String comapnay_name, String email,String trade_name, String business_address, String contact) {
 		WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -121,7 +122,7 @@ public class methods {
 		pass.sendKeys("Ingen@123456789");
 		WebElement create=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@value='Create']")));
 		create.click();
-	}
+		}
 	public void loginviacompany(String email, String pass) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Use shared driver
 		WebElement user = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter Your Email']"))); // Identifying
@@ -305,12 +306,16 @@ public class methods {
 		Thread.sleep(5000);
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Qty']"))).sendKeys("5");
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@value='Create']"))).click();
+		System.out.println("Invoice Created Succesfully");
+		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+	}
+	public void qrverify_latestinvoice() {
 		this.scroll();
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Use shared driver
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[3]/div/div[4]/div/div/div/div/div/div[2]/table/tbody/tr/td[6]/span/div[3]/a"))).click();
 		this.scroll();
-		
 	}
-	public void img_verify2() {
+	public void img_verify2_httpwithbase64() {
 	    try {
 	        // Get all <img> elements
 	        List<WebElement> images = driver.findElements(By.tagName("img"));
@@ -384,43 +389,60 @@ public class methods {
 	        // Close the browser (if needed)
 	        // driver.quit();
 	    }
+		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 	}
 	public void capturePopupAndStopOnError2() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
-        // Wait for the pop-up to be visible
-        WebElement popup = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"liveToast\"]/div/div")));
+	    // Wait for the pop-up to be visible
+	    WebElement popup = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"liveToast\"]/div/div")));
 
-        // Get the text of the pop-up
-        String message = popup.getText();
-        System.out.println("Captured Pop-up Message: " + message);
+	    // Get the text of the pop-up
+	    String message = popup.getText();
+	    
+	    // Check for errors first
+	    if (message == null || message.isEmpty()) {
+	        System.out.println("\u001B[31m" + "No message found in the pop-up." + "\u001B[0m"); // Red error message
+	        throw new RuntimeException("No pop-up message detected. Stopping execution.");
+	    }
 
-        // Check for errors in the pop-up message
-        if (message == null || message.isEmpty()) {
-            System.out.println("No message found in the pop-up.");
-            throw new RuntimeException("No pop-up message detected. Stopping execution.");
-        }
+	    // Check for success messages
+	    if (checkForSuccess(message)) {
+	        System.out.println("\u001B[32m" + "Success: " + message + "\u001B[0m"); // Green success message
+	    }
+	    // If not a success message, check for errors
+	    else if (checkForError2(message)) {
+	        System.out.println("\u001B[31m" + "Failed: " + message + "\u001B[0m"); // Red error message
+	    }
+	    // If neither success nor error, print the message in default color
+	    else {
+	        System.out.println("\u001B[0m" + "Captured Pop-up Message: " + message + "\u001B[0m"); // Default message color
+	    }
+	}
+	public boolean checkForError2(String message) {
+	    // Method to check for error messages in the pop-up
+	    String[] errorKeywords = { "error", "failed", "user not created", "invalid", "unsuccessful", "Opps", "already" };
 
-        // Check for error messages
-        if (checkForError2(message)) {
-            System.out.println("Error detected in pop-up. Terminating execution.");
-        }
-    }
-	 // Method to check for error messages in the pop-up
-    public boolean checkForError2(String message) {
-        String[] errorKeywords = { "error", "failed", "user not created", "invalid", "unsuccessful","Opps" };
+	    // Check if the message contains any error keyword
+	    for (String keyword : errorKeywords) {
+	        if (message.contains(keyword)) {
+	            return true; // Error found
+	        }
+	    }
 
-        // Check if the message contains any error keyword
-        for (String keyword : errorKeywords) {
-            if (message.contains(keyword)) {
-//              System.out.println("Error detected in pop-up: " + message);
-                return true;
-            }
-        }
+	    return false; // No errors found
+	}
+	public boolean checkForSuccess(String message) {
+	    // Method to check for success messages in the pop-up
+	    String[] successKeywords = { "success", "completed", "created", "done", "successful", "congratulations", "successfully" };
 
-        return false; // No errors found
-    }
+	    // Check if the message contains any success keyword
+	    for (String keyword : successKeywords) {
+	        if (message.contains(keyword)) {
+	            return true; // Success found
+	        }
+	    }
 
-
-
+	    return false; // No success found
+	}
 }
