@@ -1,9 +1,13 @@
 package org.testing.TestScripts;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Duration;
 import java.util.List;
+import java.util.Base64;
+import javax.imageio.ImageIO;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -305,4 +309,81 @@ public class methods {
 		this.scroll();
 		
 	}
+	public void img_verify2() {
+	    try {
+	        // Get all <img> elements
+	        List<WebElement> images = driver.findElements(By.tagName("img"));
+
+	        System.out.println("Total images found: " + images.size());
+
+	        for (WebElement img : images) {
+	            String src = img.getAttribute("src");
+
+	            if (src == null || src.isEmpty()) {
+	                System.err.println("Image with missing 'src' attribute found.");
+	                continue;
+	            }
+
+	            if (src.startsWith("data:image")) {
+	                // Handle Base64-encoded images
+	                System.out.println("Data URI detected: " + src);
+
+	                try {
+	                    // Extract Base64 data
+	                    String base64Data = src.substring(src.indexOf(",") + 1);
+
+	                    // Sanitize Base64 data by removing whitespaces
+	                    base64Data = base64Data.replaceAll("\\s", "");
+
+	                    // Decode Base64 data
+	                    byte[] imageBytes = Base64.getDecoder().decode(base64Data);
+
+	                    // Verify the decoded image
+	                    BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageBytes));
+	                    if (image != null) {
+	                        System.out.println("Base64 image is valid.");
+	                    } else {
+	                        System.err.println("Invalid Base64 image.");
+	                    }
+	                } catch (IllegalArgumentException e) {
+	                    System.err.println("Error decoding Base64 image: Invalid format.");
+	                    e.printStackTrace();
+	                } catch (Exception e) {
+	                    System.err.println("Error validating Base64 image: " + e.getMessage());
+	                    e.printStackTrace();
+	                }
+	            } else {
+	                // Handle standard HTTP/HTTPS image URLs
+	                HttpURLConnection connection = null;
+
+	                try {
+	                    // Validate image URL
+	                    connection = (HttpURLConnection) new URL(src).openConnection();
+	                    connection.setRequestMethod("HEAD");
+	                    connection.connect();
+
+	                    int responseCode = connection.getResponseCode();
+	                    if (responseCode >= 200 && responseCode < 400) {
+	                        System.out.println("Response code = " + responseCode);
+	                        System.out.println("Image is valid: " + src);
+	                    } else {
+	                        System.err.println("Broken image detected: " + src + " (Response code: " + responseCode + ")");
+	                    }
+	                } catch (Exception e) {
+	                    System.err.println("Error validating image: " + src);
+	                    e.printStackTrace();
+	                } finally {
+	                    if (connection != null) {
+	                        connection.disconnect();
+	                    }
+	                }
+	            }
+	        }
+	    } finally {
+	        // Close the browser (if needed)
+	        // driver.quit();
+	    }
+	}
+
+
 }

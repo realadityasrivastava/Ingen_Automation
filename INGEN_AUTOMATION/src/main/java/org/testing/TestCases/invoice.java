@@ -1,5 +1,4 @@
 package org.testing.TestCases;
-
 import org.testing.TestScripts.methods;
 
 public class invoice {
@@ -9,6 +8,6 @@ public static void main(String[] args) throws InterruptedException {
 	m.loginviacompany("govind17@yopmail.com", "Ingen@123456789");
 	m.invoice();
 	Thread.sleep(3000);
-	m.img_verify();
+	m.img_verify2();
 }
 }
