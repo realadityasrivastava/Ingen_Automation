@@ -150,7 +150,7 @@ public class methods {
 		plus.click();
 		WebElement cname=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Name']")));
 		cname.sendKeys(name);
-		WebElement cnum=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Contact data']")));
+		WebElement cnum=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='contact']")));
 		cnum.sendKeys(contact);
 		WebElement em=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='email']")));
 		em.sendKeys(email);
