@@ -16,7 +16,6 @@ Ingen Automation is a robust SaaS platform designed to empower clients with feat
 - **Automation Framework**: Selenium
 - **Build Tool**: Maven/Gradle (please specify)
 - **IDE Compatibility**: Any Java-compatible IDE (e.g., IntelliJ IDEA, Eclipse, VSCode)
-- **Database**: (mention if applicable)
 
 ## Prerequisites
 
