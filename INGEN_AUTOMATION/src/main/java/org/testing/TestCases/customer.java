@@ -10,5 +10,6 @@ public static void main(String[] args) {
 	g.customer("Suraj", "546892130", "suraj18@yopmail.com");
 	g.capturePopupAndStopOnError2();
 	g.browserclose();
+	g.browserclose();
 }
 }
