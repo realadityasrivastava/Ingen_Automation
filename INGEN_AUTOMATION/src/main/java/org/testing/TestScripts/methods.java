@@ -418,6 +418,7 @@ public class methods {
 	    else {
 	        System.out.println("\u001B[0m" + "Captured Pop-up Message: " + message + "\u001B[0m"); // Default message color
 	    }
+		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 	}
 	public boolean checkForError2(String message) {
 	    // Method to check for error messages in the pop-up
@@ -453,11 +454,17 @@ public class methods {
 		WebElement invoice_name=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='invoice']")));
 		Select inv = new Select(invoice_name);
 		inv.selectByVisibleText(invoice_number);
+		Thread.sleep(2000);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='amount']"))).clear();
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='amount']"))).sendKeys(credit_amount);
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='date']"))).sendKeys(ddmmyyyy);
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//textarea[@id='description']"))).sendKeys("test");
 		Thread.sleep(1000);
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='creditNoteCreateSubmit']"))).click();
-
+	}
+	public void browserclose() {
+		driver.close();
+		System.out.println("BROWSER CLOSED");
+		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 	}
 }
