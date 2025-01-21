@@ -12,6 +12,6 @@ public static void main(String[] args) throws InterruptedException {
 	m.loginviasuperadmin();
 	m.companywithpass("Gopal Private Limited", "gopal20@yopmail.com", "gopal20", "Noida", "523487925");
 	m.capturePopupAndStopOnError2();
-	m.browserclose();
+	m.browserclose()
 }
 }
