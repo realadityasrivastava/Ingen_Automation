@@ -8,5 +8,6 @@ public static void main(String[] args) throws InterruptedException {
 	g.browserlaunch();
 	g.loginviacompany("govind17@yopmail.com", "Ingen@123456789");
 	g.setup_for_product();
+	g.browserclose();
 }
 }
