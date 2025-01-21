@@ -15,5 +15,6 @@ public static void main(String[] args) throws InterruptedException {
 	m.browserclose();
 	//test
 	//new
+	//good
 }
 }
