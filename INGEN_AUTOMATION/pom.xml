@@ -21,10 +21,5 @@
           <artifactId>selenium-java</artifactId>
           <version>4.27.0</version>
       </dependency>
-      <dependency>
-      	<groupId>ciis_automation</groupId>
-      	<artifactId>ciis_automation</artifactId>
-      	<version>0.0.1-SNAPSHOT</version>
-      </dependency>
   </dependencies>
 </project>
