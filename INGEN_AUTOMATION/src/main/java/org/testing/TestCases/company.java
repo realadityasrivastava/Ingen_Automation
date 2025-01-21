@@ -14,5 +14,6 @@ public static void main(String[] args) throws InterruptedException {
 	m.capturePopupAndStopOnError2();
 	m.browserclose();
 	//test
+	//new
 }
 }
