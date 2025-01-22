@@ -1,9 +1,14 @@
 package org.testing.TestScripts;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Duration;
+import java.util.Base64;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -21,14 +26,14 @@ public class flow_methods {
 		WebElement user = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter Your Email']"))); // Identifying
 		user.sendKeys("superadmin@example.com"); // Action
 		
+		WebElement reject=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"c-s-bn\"]")));
+		reject.click();
+		
 		WebElement password = driver.findElement(By.xpath("//input[@placeholder='Enter Your Password']")); // Identifying
 		password.sendKeys("1234"); // Action
 		
 		WebElement lg = driver.findElement(By.xpath("//input[@id='saveBtn']")); // Identifying
 		lg.click(); // Action
-		
-		WebElement reject=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"c-s-bn\"]")));
-		reject.click();
 		
 		System.out.println("LOGIN SUCCESSFULLY VIA SUPER ADMIN");
 		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
@@ -44,7 +49,7 @@ public class flow_methods {
 		System.out.println("WEBSITE LOADED SUCCESSFULLY");
 		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 		}	
-	public void img_verify() {
+	public void img_verify_httponly() {
 	    try {
 	        // Get all <img> elements
 	        List<WebElement> images = driver.findElements(By.tagName("img"));
@@ -90,6 +95,7 @@ public class flow_methods {
 	        // Close the browser
 	        // driver.quit();
 	    }
+		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 	}
 	public void companywithpass(String comapnay_name, String email,String trade_name, String business_address, String contact) {
 		WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -117,7 +123,7 @@ public class flow_methods {
 		pass.sendKeys("Ingen@123456789");
 		WebElement create=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@value='Create']")));
 		create.click();
-	}
+		}
 	public void loginviacompany(String email, String pass) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Use shared driver
 		WebElement user = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter Your Email']"))); // Identifying
@@ -128,6 +134,7 @@ public class flow_methods {
 		
 		WebElement lg = driver.findElement(By.xpath("//input[@id='saveBtn']")); // Identifying
 		lg.click(); // Action
+		
 		
 		System.out.println("LOGIN SUCCESSFULLY VIA COMPANY");
 		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
@@ -140,11 +147,11 @@ public class flow_methods {
 		cus.click();
 		WebElement plus=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[3]/div/div[1]/div/div/div[2]/div/a[3]")));
 		plus.click();
-		WebElement cname=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Name']")));
+		WebElement cname=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='name']")));
 		cname.sendKeys(name);
-		WebElement cnum=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Contact data']")));
+		WebElement cnum=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='contact']")));
 		cnum.sendKeys(contact);
-		WebElement em=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='email']")));
+		WebElement em=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='email']")));
 		em.sendKeys(email);
 		WebElement tax=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='tax_number']")));
 		tax.sendKeys("28229713");
@@ -297,10 +304,166 @@ public class flow_methods {
 		Thread.sleep(5000);
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Qty']"))).sendKeys("5");
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@value='Create']"))).click();
+		System.out.println("Invoice Created Succesfully");
+		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+	}
+	public void qrverify_latestinvoice() {
 		this.scroll();
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Use shared driver
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[3]/div/div[4]/div/div/div/div/div/div[2]/table/tbody/tr/td[6]/span/div[3]/a"))).click();
 		this.scroll();
-		
+	}
+	public void img_verify2_httpwithbase64() {
+	    try {
+	        // Get all <img> elements
+	        List<WebElement> images = driver.findElements(By.tagName("img"));
+
+	        System.out.println("Total images found: " + images.size());
+
+	        for (WebElement img : images) {
+	            String src = img.getAttribute("src");
+
+	            if (src == null || src.isEmpty()) {
+	                System.err.println("Image with missing 'src' attribute found.");
+	                continue;
+	            }
+
+	            if (src.startsWith("data:image")) {
+	                // Handle Base64-encoded images
+	                System.out.println("Data URI detected: " + src);
+
+	                try {
+	                    // Extract Base64 data
+	                    String base64Data = src.substring(src.indexOf(",") + 1);
+
+	                    // Sanitize Base64 data by removing whitespaces
+	                    base64Data = base64Data.replaceAll("\\s", "");
+
+	                    // Decode Base64 data
+	                    byte[] imageBytes = Base64.getDecoder().decode(base64Data);
+
+	                    // Verify the decoded image
+	                    BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageBytes));
+	                    if (image != null) {
+	                        System.out.println("Base64 image is valid.");
+	                    } else {
+	                        System.err.println("Invalid Base64 image.");
+	                    }
+	                } catch (IllegalArgumentException e) {
+	                    System.err.println("Error decoding Base64 image: Invalid format.");
+	                    e.printStackTrace();
+	                } catch (Exception e) {
+	                    System.err.println("Error validating Base64 image: " + e.getMessage());
+	                    e.printStackTrace();
+	                }
+	            } else {
+	                // Handle standard HTTP/HTTPS image URLs
+	                HttpURLConnection connection = null;
+
+	                try {
+	                    // Validate image URL
+	                    connection = (HttpURLConnection) new URL(src).openConnection();
+	                    connection.setRequestMethod("HEAD");
+	                    connection.connect();
+
+	                    int responseCode = connection.getResponseCode();
+	                    if (responseCode >= 200 && responseCode < 400) {
+	                        System.out.println("Response code = " + responseCode);
+	                        System.out.println("Image is valid: " + src);
+	                    } else {
+	                        System.err.println("Broken image detected: " + src + " (Response code: " + responseCode + ")");
+	                    }
+	                } catch (Exception e) {
+	                    System.err.println("Error validating image: " + src);
+	                    e.printStackTrace();
+	                } finally {
+	                    if (connection != null) {
+	                        connection.disconnect();
+	                    }
+	                }
+	            }
+	        }
+	    } finally {
+	        // Close the browser (if needed)
+	        // driver.quit();
+	    }
+		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+	}
+	public void capturePopupAndStopOnError2() {
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+
+	    // Wait for the pop-up to be visible
+	    WebElement popup = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"liveToast\"]/div/div")));
+
+	    // Get the text of the pop-up
+	    String message = popup.getText();
+	    
+	    // Check for errors first
+	    if (message == null || message.isEmpty()) {
+	        System.out.println("\u001B[31m" + "No message found in the pop-up." + "\u001B[0m"); // Red error message
+	        throw new RuntimeException("No pop-up message detected. Stopping execution.");
+	    }
+
+	    // Check for success messages
+	    if (checkForSuccess(message)) {
+	        System.out.println("\u001B[32m" + "Success: " + message + "\u001B[0m"); // Green success message
+	    }
+	    // If not a success message, check for errors
+	    else if (checkForError2(message)) {
+	        System.out.println("\u001B[31m" + "Failed: " + message + "\u001B[0m"); // Red error message
+	    }
+	    // If neither success nor error, print the message in default color
+	    else {
+	        System.out.println("\u001B[0m" + "Captured Pop-up Message: " + message + "\u001B[0m"); // Default message color
+	    }
+		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+	}
+	public boolean checkForError2(String message) {
+	    // Method to check for error messages in the pop-up
+	    String[] errorKeywords = { "error", "failed", "user not created", "invalid", "unsuccessful", "Opps", "already" };
+
+	    // Check if the message contains any error keyword
+	    for (String keyword : errorKeywords) {
+	        if (message.contains(keyword)) {
+	            return true; // Error found
+	        }
+	    }
+
+	    return false; // No errors found
+	}
+	public boolean checkForSuccess(String message) {
+	    // Method to check for success messages in the pop-up
+	    String[] successKeywords = { "success", "completed", "created", "done", "successful", "congratulations", "successfully" };
+
+	    // Check if the message contains any success keyword
+	    for (String keyword : successKeywords) {
+	        if (message.contains(keyword)) {
+	            return true; // Success found
+	        }
+	    }
+
+	    return false; // No success found
+	}
+	public void credit_note(String invoice_number, String ddmmyyyy, String credit_amount) throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Use shared driver
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/nav/div[1]/div[2]/ul/li[2]/a"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Credit Note"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@data-title='Create New Credit Note']"))).click();
+		WebElement invoice_name=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='invoice']")));
+		Select inv = new Select(invoice_name);
+		inv.selectByVisibleText(invoice_number);
+		Thread.sleep(2000);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='amount']"))).clear();
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='amount']"))).sendKeys(credit_amount);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='date']"))).sendKeys(ddmmyyyy);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//textarea[@id='description']"))).sendKeys("test");
+		Thread.sleep(1000);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='creditNoteCreateSubmit']"))).click();
+	}
+	public void browserclose() {
+		driver.close();
+		System.out.println("BROWSER CLOSED");
+		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 	}
 	public void logout_superadmin() {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Use shared driver

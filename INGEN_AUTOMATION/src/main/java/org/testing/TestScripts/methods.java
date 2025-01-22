@@ -149,11 +149,11 @@ public class methods {
 		cus.click();
 		WebElement plus=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[3]/div/div[1]/div/div/div[2]/div/a[3]")));
 		plus.click();
-		WebElement cname=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Name']")));
+		WebElement cname=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='name']")));
 		cname.sendKeys(name);
 		WebElement cnum=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='contact']")));
 		cnum.sendKeys(contact);
-		WebElement em=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='email']")));
+		WebElement em=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='email']")));
 		em.sendKeys(email);
 		WebElement tax=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='tax_number']")));
 		tax.sendKeys("28229713");
