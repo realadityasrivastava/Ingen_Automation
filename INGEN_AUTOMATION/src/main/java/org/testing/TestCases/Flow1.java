@@ -7,15 +7,20 @@ public static void main(String[] args) throws InterruptedException {
 	flow_methods f=new flow_methods();
 	f.browserlaunch();
 	f.loginviasuperadmin();
-	f.img_verify();
-	f.companywithpass("Govind Private Limited", "govind17@yopmail.com", "Govind17", "Noida", "523487925");
+	f.img_verify2_httpwithbase64();
+	f.companywithpass("Naman Goods and Service", "naman22@yopmail.com", "Naman22", "Noida", "523487925");
+	f.capturePopupAndStopOnError2();
 	Thread.sleep(5000);
 	f.logout_superadmin();
-	f.loginviacompany("govind17@yopmail.com", "Ingen@123456789");
+	f.loginviacompany("govind17@yopmail.com", "12345678");
 	f.setup_for_product();
-	f.customer("Guru", "456258789", "guru18@yopmail.com");
+	f.capturePopupAndStopOnError2();
+	f.customer("Ram", "456258789", "ram22@yopmail.com");
+	f.capturePopupAndStopOnError2();
 	f.product("Apple", "001", "100", "70", "100");
 	f.invoice();
-	f.img_verify();
+	f.capturePopupAndStopOnError2();
+	f.qrverify_latestinvoice();
+	f.img_verify2_httpwithbase64();
 }
 }
